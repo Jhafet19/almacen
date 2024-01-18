@@ -5,8 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mx.edu.utez.almacen.model.product.ProductBean;
+import mx.edu.utez.almacen.model.saleproduct.ProductSale;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 
 @Entity
@@ -31,5 +34,11 @@ public class InventoryBean {
     @Column(nullable = false)
     private  Double pricePublic;
 
+    @OneToOne
+    @JoinColumn(name = "product_id")
+    private ProductBean productBean;
+
+    @OneToMany(mappedBy = "inventoryBean")
+    private Set<ProductSale> productSales;
 
 }

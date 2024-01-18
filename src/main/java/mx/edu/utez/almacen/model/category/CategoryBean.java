@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mx.edu.utez.almacen.model.product.ProductBean;
+
+import java.util.Set;
 
 //Creamos uns antidad
 @Entity
@@ -25,5 +28,9 @@ public class CategoryBean {
 
     @Column(length = 10)
     private  String codigo;
+
+    @OneToMany(mappedBy = "categoryBean")
+    private Set<ProductBean> productBean;
+
 
 }

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mx.edu.utez.almacen.model.user.UserBean;
 
 import java.time.LocalDate;
 
@@ -36,4 +37,8 @@ public class PersonBean {
 
     @Column(length = 10,nullable = false)
     private String phoneNumber;
+
+    @OneToOne(mappedBy = "personBean",fetch = FetchType.EAGER)
+    private UserBean userBean;
+
 }
