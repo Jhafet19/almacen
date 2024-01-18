@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 @Entity
 //Le ponemos nombre
-@Table(name="category")
+@Table(name="inventory")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
