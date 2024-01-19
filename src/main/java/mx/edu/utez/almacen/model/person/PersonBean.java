@@ -41,4 +41,7 @@ public class PersonBean {
     @OneToOne(mappedBy = "personBean",fetch = FetchType.EAGER)
     private UserBean userBean;
 
+    @Column(length = 18,nullable = false)
+    private String curp;
+
 }
