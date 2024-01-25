@@ -44,4 +44,13 @@ public class PersonBean {
     @Column(length = 18,nullable = false)
     private String curp;
 
+    public PersonBean(String fullName, String surname, String lastname, LocalDate birthday, String email, String phoneNumber, String curp) {
+        this.fullName = fullName;
+        this.surname = surname;
+        this.lastname = lastname;
+        this.birthday = birthday;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.curp = curp;
+    }
 }

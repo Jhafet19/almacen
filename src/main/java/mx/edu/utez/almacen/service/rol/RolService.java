@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class RolService {
 
     private final RolRepository repository;
-
     public ResponseEntity<ApiResponse> getAll() {
         return new ResponseEntity<>(new ApiResponse(repository.findAll(),
                 HttpStatus.OK), HttpStatus.OK);
