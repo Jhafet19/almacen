@@ -11,5 +11,4 @@ public interface PersonRepository extends JpaRepository<PersonBean,Long> {
 
     Optional<PersonBean> deleteByCurp(String curp);
 
-    PersonBean updateByCurp(String curp);
 }

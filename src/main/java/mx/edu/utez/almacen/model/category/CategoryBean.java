@@ -33,4 +33,14 @@ public class CategoryBean {
     private Set<ProductBean> productBean;
 
 
+    public CategoryBean(String nombre, String codigo) {
+        this.nombre = nombre;
+        this.codigo = codigo;
+    }
+
+    public CategoryBean(Long id, String nombre, String codigo) {
+        this.id = id;
+        this.nombre = nombre;
+        this.codigo = codigo;
+    }
 }

@@ -28,7 +28,10 @@ public class PersonDto {
     private String curp;
 
     public PersonBean toEntity(){
-
         return  new PersonBean(fullName,surname,lastname,birthday,email,phoneNumber,curp);
+    }
+
+    public PersonBean toEntityToId(){
+        return  new PersonBean(id,fullName,surname,lastname,birthday,email,phoneNumber,curp);
     }
 }

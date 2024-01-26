@@ -19,12 +19,19 @@ public class PersonController {
     public ResponseEntity<ApiResponse> resgister(@RequestBody PersonDto  dto){
         return service.save(dto.toEntity());
     }
-    @PutMapping("update/{curp}")
-    public ResponseEntity<ApiResponse>update(@PathVariable String curp,@RequestBody PersonDto dto){
-        return service.update(curp,dto.toEntity());
+    @PutMapping("update/{id}")
+    public ResponseEntity<ApiResponse>updateByCurp(@PathVariable Long id,@RequestBody PersonDto dto){
+        return service.updateByCurp(id,dto.toEntity());
     }
     @DeleteMapping("/delete/{curp}")
     public  ResponseEntity<ApiResponse> delete(@PathVariable String curp){
         return service.delete(curp);
     }
+
+    @GetMapping("/mostrar")
+    public ResponseEntity<ApiResponse> getAll(){
+        return service.getAll();
+    }
+
+
 }

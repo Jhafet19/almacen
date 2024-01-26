@@ -43,14 +43,19 @@ public class PersonService {
     }
 
     @Transactional(rollbackFor = {SQLException.class})
-    public ResponseEntity<ApiResponse>update( String curp, PersonBean personBean){
-        Optional<PersonBean> foundPerson = repository.findByCurp(curp);
+    public ResponseEntity<ApiResponse>updateByCurp( Long id, PersonBean personBean){
+        Optional<PersonBean> foundPerson = repository.findById(id);
         if (foundPerson.isPresent()) {
-            return new ResponseEntity<>(new ApiResponse(repository.updateByCurp(personBean.getCurp()),
+            personBean.setId(id);
+            return new ResponseEntity<>(new ApiResponse(repository.saveAndFlush(personBean),
                     HttpStatus.OK, false,
-                    "Se elimino de forma Exitos"), HttpStatus.OK);
+                    "Se Actualizo de forma Exitosa"), HttpStatus.OK);
         }
         return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true,
                 "El registro no existe"), HttpStatus.BAD_REQUEST);
+    }
+    public ResponseEntity<ApiResponse> getAll() {
+        return new ResponseEntity<>(new ApiResponse(repository.findAll(),
+                HttpStatus.OK), HttpStatus.OK);
     }
 }

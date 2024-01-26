@@ -53,4 +53,15 @@ public class PersonBean {
         this.phoneNumber = phoneNumber;
         this.curp = curp;
     }
+
+    public PersonBean(Long id, String fullName, String surname, String lastname, LocalDate birthday, String email, String phoneNumber, String curp) {
+        this.id = id;
+        this.fullName = fullName;
+        this.surname = surname;
+        this.lastname = lastname;
+        this.birthday = birthday;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.curp = curp;
+    }
 }

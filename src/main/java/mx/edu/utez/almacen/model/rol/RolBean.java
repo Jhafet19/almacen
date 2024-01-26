@@ -25,4 +25,8 @@ public class RolBean {
     //
     @OneToOne(mappedBy = "rolBean",fetch = FetchType.EAGER)
     private UserBean userBean;
+
+    public RolBean(String rol) {
+        this.rol = rol;
+    }
 }
