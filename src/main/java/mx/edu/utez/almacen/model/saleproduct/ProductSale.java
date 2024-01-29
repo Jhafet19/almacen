@@ -33,4 +33,19 @@ public class ProductSale {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "inventory_id",nullable = false)
     private InventoryBean inventoryBean;
+
+    public ProductSale(Long id, Integer quantity, Double total, TicketBean ticketBean, InventoryBean inventoryBean) {
+        this.id = id;
+        this.quantity = quantity;
+        this.total = total;
+        this.ticketBean = ticketBean;
+        this.inventoryBean = inventoryBean;
     }
+
+    public ProductSale(Integer quantity, Double total, TicketBean ticketBean, InventoryBean inventoryBean) {
+        this.quantity = quantity;
+        this.total = total;
+        this.ticketBean = ticketBean;
+        this.inventoryBean = inventoryBean;
+    }
+}

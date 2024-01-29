@@ -24,4 +24,14 @@ public class CategoryController {
     public  ResponseEntity<ApiResponse> create(@RequestBody CategoryDto dto){
         return service.create(dto.toEntity());
     }
+
+    @DeleteMapping("delete/{nombre}")
+    public  ResponseEntity<ApiResponse> delete(@PathVariable String nombre){
+        return  service.delete(nombre);
+    }
+
+    @PutMapping("update/{id}")
+    public ResponseEntity<ApiResponse> update(@PathVariable Long id,@RequestBody CategoryDto dto){
+        return service.update(id,dto.toEntity());
+    }
 }

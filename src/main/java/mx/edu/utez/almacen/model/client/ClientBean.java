@@ -35,4 +35,19 @@ public class ClientBean {
 
     @OneToMany(mappedBy = "clientBean")
     private Set<TicketBean> ticketBean;
+
+    public ClientBean(String companName, String address, String phoneNumber, String email) {
+        this.companName = companName;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
+
+    public ClientBean(Long id, String companName, String address, String phoneNumber, String email) {
+        this.id = id;
+        this.companName = companName;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
 }

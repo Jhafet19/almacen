@@ -1,5 +1,6 @@
 package mx.edu.utez.almacen.model.inventory;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,9 +37,22 @@ public class InventoryBean {
 
     @OneToOne
     @JoinColumn(name = "product_id")
+    @JsonBackReference
     private ProductBean productBean;
 
     @OneToMany(mappedBy = "inventoryBean")
     private Set<ProductSale> productSales;
 
+    public InventoryBean(LocalDate expiration, Integer stock, Double pricePublic) {
+        this.expiration = expiration;
+        this.stock = stock;
+        this.pricePublic = pricePublic;
+    }
+
+    public InventoryBean(Long id, LocalDate expiration, Integer stock, Double pricePublic) {
+        this.id = id;
+        this.expiration = expiration;
+        this.stock = stock;
+        this.pricePublic = pricePublic;
+    }
 }

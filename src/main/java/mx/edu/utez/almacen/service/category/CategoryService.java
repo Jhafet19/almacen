@@ -35,4 +35,31 @@ public class CategoryService {
     }
 
 
+    @Transactional(rollbackFor = {SQLException.class})
+    public  ResponseEntity<ApiResponse> delete(String nombre){
+        Optional<CategoryBean> foundCategory = repository.findByNombre(nombre);
+        if(foundCategory.isPresent()){
+            return new ResponseEntity<>(new ApiResponse(repository.deleteByNombre(nombre),
+                    HttpStatus.OK,false,"Categoria eliminada exitosamente"
+                    ),HttpStatus.OK);
+        }
+        return  new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST
+        ,true,"Registro no encontrado"
+        ),HttpStatus.BAD_REQUEST);
+    }
+
+
+    @Transactional(rollbackFor = {SQLException.class})
+    public ResponseEntity<ApiResponse> update(Long id,CategoryBean categoryBean){
+        Optional<CategoryBean> foundCategory=repository.findById(id);
+        if (foundCategory.isPresent()){
+            categoryBean.setId(id);
+            return new ResponseEntity<>(new ApiResponse(repository.saveAndFlush(categoryBean),
+                    HttpStatus.OK,false,"Categoria actualizada"),HttpStatus.OK);
+        }
+        return  new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST,true,
+        "Categoria no encontrada"
+        ),HttpStatus.BAD_REQUEST);
+
+    }
 }

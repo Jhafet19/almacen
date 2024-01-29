@@ -40,6 +40,19 @@ public class UserBean {
 
     @OneToMany(mappedBy = "userBean")
     private Set<TicketBean> ticketBean;
+
+    public UserBean(Long id, String username, String password, Set<TicketBean> ticketBean) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.ticketBean = ticketBean;
+    }
+
+    public UserBean(String username, String password, Set<TicketBean> ticketBean) {
+        this.username = username;
+        this.password = password;
+        this.ticketBean = ticketBean;
+    }
 }
 
 

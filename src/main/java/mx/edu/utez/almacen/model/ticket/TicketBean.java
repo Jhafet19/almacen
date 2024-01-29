@@ -55,5 +55,24 @@ public class TicketBean {
     @OneToMany(mappedBy = "ticketBean")
     private Set<ProductSale>  productSales;
 
+    public TicketBean(Long id, LocalDate saleDate, Integer folio, LocalTime saleHour, double totPay, Integer totProduct, UserBean userBean, ClientBean clientBean) {
+        this.id = id;
+        this.saleDate = saleDate;
+        this.folio = folio;
+        this.saleHour = saleHour;
+        this.totPay = totPay;
+        this.totProduct = totProduct;
+        this.userBean = userBean;
+        this.clientBean = clientBean;
+    }
 
+    public TicketBean(LocalDate saleDate, Integer folio, LocalTime saleHour, double totPay, Integer totProduct, UserBean userBean, ClientBean clientBean) {
+        this.saleDate = saleDate;
+        this.folio = folio;
+        this.saleHour = saleHour;
+        this.totPay = totPay;
+        this.totProduct = totProduct;
+        this.userBean = userBean;
+        this.clientBean = clientBean;
+    }
 }
