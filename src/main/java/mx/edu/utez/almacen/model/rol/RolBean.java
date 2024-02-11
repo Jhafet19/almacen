@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mx.edu.utez.almacen.model.user.UserBean;
 
+import java.util.Set;
+
 
 @Entity
 @Table(name="rol")
@@ -23,8 +25,9 @@ public class RolBean {
     private String rol;
 
     //
-    @OneToOne(mappedBy = "rolBean",fetch = FetchType.EAGER)
-    private UserBean userBean;
+
+    @OneToMany(mappedBy = "rolBean")
+    private Set< UserBean> userBeans;
 
     public RolBean(String rol) {
         this.rol = rol;

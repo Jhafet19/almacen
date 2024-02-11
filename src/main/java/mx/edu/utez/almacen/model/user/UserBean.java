@@ -1,6 +1,7 @@
 package mx.edu.utez.almacen.model.user;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,9 +30,10 @@ public class UserBean {
     @Column(length = 50, nullable = false)
     private String password;
 
-    @OneToOne
     //Esto define que tabla contiene a quien
-    @JoinColumn(name = "rol_id")
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rol_id",nullable = false)
     private RolBean rolBean;
 
     @OneToOne
