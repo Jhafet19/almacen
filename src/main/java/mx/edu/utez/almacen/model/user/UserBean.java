@@ -48,6 +48,8 @@ public class UserBean {
         this.ticketBean = ticketBean;
     }
 
+
+
     public UserBean(String username, String password, Set<TicketBean> ticketBean) {
         this.username = username;
         this.password = password;

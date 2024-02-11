@@ -20,11 +20,11 @@ public class ProductSaleDto {
 
     private InventoryBean inventoryBean;
 
-    public ProductSale toEntity(){
-        return new ProductSale(quantity,total,ticketBean,inventoryBean);
-    }
-
-    public ProductSale toEntityId(){
-        return new ProductSale(id,quantity,total,ticketBean,inventoryBean);
-    }
+//    public ProductSale toEntity(){
+//        return new ProductSale(quantity,total,ticketBean,inventoryBean);
+//    }
+//
+//    public ProductSale toEntityId(){
+//        return new ProductSale(id,quantity,total,ticketBean,inventoryBean);
+//    }
 }

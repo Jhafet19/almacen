@@ -2,6 +2,10 @@ package mx.edu.utez.almacen.service.user;
 
 import lombok.AllArgsConstructor;
 import mx.edu.utez.almacen.config.ApiResponse;
+import mx.edu.utez.almacen.model.person.PersonBean;
+import mx.edu.utez.almacen.model.person.PersonRepository;
+import mx.edu.utez.almacen.model.rol.RolBean;
+import mx.edu.utez.almacen.model.rol.RolRepository;
 import mx.edu.utez.almacen.model.user.UserBean;
 import mx.edu.utez.almacen.model.user.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -17,17 +21,38 @@ import java.util.Optional;
 @Transactional
 public class UserService {
     private final UserRepository repository;
-
+    private final RolRepository rolRepository;
+    private final PersonRepository personRepository;
     public ResponseEntity<ApiResponse> getAll() {
         return new ResponseEntity<>(new ApiResponse(repository.findAll(),
                 HttpStatus.OK), HttpStatus.OK);
     }
     @Transactional(rollbackFor = {SQLException.class})
     public ResponseEntity<ApiResponse> save(UserBean userbean) {
-
-        return new ResponseEntity<>(new ApiResponse(repository.saveAndFlush(userbean),
-                HttpStatus.OK, false,
-                "El registro fue exitos"), HttpStatus.OK);
+        Optional<UserBean> foundUser = repository.findByUsername(userbean.getUsername());
+        if (foundUser.isPresent()) {
+            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "EL usuario ya existe"), HttpStatus.BAD_REQUEST);
+        }
+        if (userbean.getPersonBean() != null) {
+            Optional<PersonBean> foundPerson = personRepository.findById(userbean.getPersonBean().getId());
+            if (foundPerson.isPresent()){
+                Optional<RolBean> foundRol =rolRepository.findById(userbean.getRolBean().getId());
+                if (foundRol.isPresent()){
+                    return new ResponseEntity<>(new ApiResponse(repository.saveAndFlush(userbean),HttpStatus.OK,false,"Usuario creado"),HttpStatus.OK);
+                }else{
+                    new ResponseEntity<>(new ApiResponse(rolRepository.saveAndFlush(userbean.getRolBean())
+                            , HttpStatus.OK, true,
+                            "El rol no existe"), HttpStatus.OK);
+                }
+            }else{
+                new ResponseEntity<>(new ApiResponse(personRepository.saveAndFlush(userbean.getPersonBean())
+                        , HttpStatus.OK, true,
+                        "La persona no existe"), HttpStatus.OK);
+            }
+        }
+        return  new ResponseEntity<>(new ApiResponse(repository.saveAndFlush(userbean)
+                , HttpStatus.OK, true,
+                "Ya la cree"), HttpStatus.OK);
     }
 
     @Transactional(rollbackFor = {SQLException.class})

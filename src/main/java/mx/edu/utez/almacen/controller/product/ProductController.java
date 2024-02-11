@@ -24,7 +24,7 @@ public class ProductController {
 
     @PostMapping("save")
     public  ResponseEntity<ApiResponse> save(@RequestBody ProductDto dto){
-        return service.create(dto.toEntity());
+        return service.save(dto.toEntity());
     }
 
     @PutMapping("update")

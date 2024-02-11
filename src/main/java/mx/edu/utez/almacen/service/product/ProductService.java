@@ -2,6 +2,8 @@ package mx.edu.utez.almacen.service.product;
 
 import lombok.AllArgsConstructor;
 import mx.edu.utez.almacen.config.ApiResponse;
+import mx.edu.utez.almacen.model.category.CategoryBean;
+import mx.edu.utez.almacen.model.category.CategoryRepository;
 import mx.edu.utez.almacen.model.product.ProductBean;
 import mx.edu.utez.almacen.model.product.ProductRepository;
 import org.springframework.http.HttpStatus;
@@ -18,11 +20,34 @@ import java.util.Optional;
 public class ProductService {
 
     private  final ProductRepository repository;
+    private final CategoryRepository categoryRepository;
 
     public ResponseEntity<ApiResponse> getAll(){
         return new ResponseEntity<>(new ApiResponse(repository.findAll(), HttpStatus.OK,false,"Consulta exitosa"),HttpStatus.OK);
     }
 
+    @Transactional(rollbackFor = {SQLException.class})
+    public ResponseEntity<ApiResponse> save(ProductBean bean) {
+        Optional<ProductBean> foundProduct = repository.findById(bean.getId());
+        if (foundProduct.isPresent()) {
+            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El ya esta duplicado"), HttpStatus.BAD_REQUEST);
+
+        }
+        if (bean.getCategoryBean() != null) {
+            Optional<CategoryBean> foundCategory = categoryRepository.findById(bean.getCategoryBean().getId());
+            if (foundCategory.isPresent()) {
+                return new ResponseEntity<>(new ApiResponse(repository.saveAndFlush(bean), HttpStatus.OK, false, "El producto fue creado"), HttpStatus.OK);
+
+            } else {
+
+                new ResponseEntity<>(new ApiResponse(categoryRepository.saveAndFlush(bean.getCategoryBean())
+                        , HttpStatus.OK, true,
+                        "La Categoia no existe"), HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(new ApiResponse(repository.saveAndFlush(bean), HttpStatus.OK, false, "El producto fue creado"), HttpStatus.OK);
+
+    }
 
     @Transactional(rollbackFor = {SQLException.class})
     public  ResponseEntity<ApiResponse> findOne(Long id){

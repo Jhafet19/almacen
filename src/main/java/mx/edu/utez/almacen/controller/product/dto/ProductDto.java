@@ -18,9 +18,11 @@ public class ProductDto {
     private CategoryBean categoryBean;
 
     public ProductBean toEntity(){
-        return new ProductBean(name,trademark,model,price,categoryBean);
+        if(categoryBean==null){
+            return new ProductBean(name,trademark,model,price);
+        }
+        return new ProductBean(id,name,trademark,model,price,categoryBean);
     }
-
     public ProductBean toEntityId(){
         return new ProductBean(id,name,trademark,model,price,categoryBean);
     }

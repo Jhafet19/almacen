@@ -21,7 +21,7 @@ public class UserController {
     public ResponseEntity<ApiResponse> getAll(){
         return service.getAll();
     }
-    @GetMapping("finfOne/{id}")
+
 
     @PostMapping("save")
     public  ResponseEntity<ApiResponse> save(@RequestBody UserDto dto){

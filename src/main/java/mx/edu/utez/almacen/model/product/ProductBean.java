@@ -34,7 +34,7 @@ public class ProductBean {
     @Column(nullable = false)
     private Double price;
 
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", nullable = false)
     private CategoryBean categoryBean;
@@ -58,5 +58,11 @@ public class ProductBean {
         this.model = model;
         this.price = price;
         this.categoryBean = categoryBean;
+    }
+    public ProductBean(String name, String trademark, String model, Double price) {
+        this.name = name;
+        this.trademark = trademark;
+        this.model = model;
+        this.price = price;
     }
 }

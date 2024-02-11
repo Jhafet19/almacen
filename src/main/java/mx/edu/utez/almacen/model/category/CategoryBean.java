@@ -1,5 +1,6 @@
 package mx.edu.utez.almacen.model.category;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class CategoryBean {
     @Column(length = 10)
     private  String codigo;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "categoryBean")
     private Set<ProductBean> productBean;
 
