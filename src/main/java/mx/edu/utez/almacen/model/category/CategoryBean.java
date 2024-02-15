@@ -20,6 +20,7 @@ import java.util.Set;
 @Setter
 public class CategoryBean {
     //Colocamos la llave foranea
+    //probando mis commits
    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
