@@ -11,7 +11,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name="rol")
+@Table(name = "rol")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,15 +19,17 @@ import java.util.Set;
 public class RolBean {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long id;
+    private Long id;
 
-    @Column(length = 100,nullable = false)
+    @Column(length = 100, nullable = false)
     private String rol;
 
     //
 
-    @OneToMany(mappedBy = "rolBean")
-    private Set< UserBean> userBeans;
+    @ManyToMany
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<UserBean> users;
 
     public RolBean(String rol) {
         this.rol = rol;

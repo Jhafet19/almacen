@@ -11,6 +11,8 @@ import mx.edu.utez.almacen.model.person.PersonBean;
 import mx.edu.utez.almacen.model.rol.RolBean;
 import mx.edu.utez.almacen.model.ticket.TicketBean;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 
@@ -31,10 +33,43 @@ public class UserBean {
     private String password;
 
     //Esto define que tabla contiene a quien
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "rol_id",nullable = false)
-    private RolBean rolBean;
+    @ManyToMany
+    @JoinColumn(name = "rol_id")
+    private Set<RolBean> roles;
+
+    @Column(columnDefinition = "TEXT")
+    private String avatar;
+
+    @Column(columnDefinition = "TIMESTAMP", insertable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime crateAt;
+
+    @Column(columnDefinition = "BOOL DEFAULT true")
+    private Boolean status;
+
+    @Column(columnDefinition = "BOOL DEFAULT false")
+    private Boolean blocked;
+
+    private String token;
+
+    public UserBean(String username, String password, PersonBean personBean) {
+        this.username = username;
+        this.password = password;
+        this.personBean = personBean;
+        this.status=true;
+        this.crateAt=LocalDateTime.now();
+        this.blocked=true;
+    }
+
+    public UserBean(String username, String password, PersonBean personBean,Set<RolBean> rolBeans) {
+        this.username = username;
+        this.password = password;
+        this.personBean = personBean;
+        this.status=true;
+        this.crateAt=LocalDateTime.now();
+        this.blocked=true;
+        this.roles=rolBeans;
+    }
 
     @OneToOne
     @JoinColumn(name = "person_id")
@@ -49,7 +84,6 @@ public class UserBean {
         this.password = password;
         this.ticketBean = ticketBean;
     }
-
 
 
     public UserBean(String username, String password, Set<TicketBean> ticketBean) {

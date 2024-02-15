@@ -19,9 +19,9 @@ public class UserDto {
     private Set<TicketBean> ticketBean;
     private PersonBean personBean;
     private RolBean rolBean;
-    public UserBean toEntity(){
-        return new UserBean(id,username,password,rolBean,personBean,ticketBean);
-    }
+//    public UserBean toEntity(){
+////        return new UserBean(id,username,password,rolBean,personBean,ticketBean);
+//    }
 
     public UserBean toEntityId(){
         return new UserBean(id,username,password,ticketBean);
