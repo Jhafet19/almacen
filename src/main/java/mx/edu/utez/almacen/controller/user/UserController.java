@@ -23,10 +23,10 @@ public class UserController {
     }
 
 
-    @PostMapping("save")
-    public  ResponseEntity<ApiResponse> save(@RequestBody UserDto dto){
-        return service.save(dto.toEntity());
-    }
+//    @PostMapping("save")
+//    public  ResponseEntity<ApiResponse> save(@RequestBody UserDto dto){
+//        return service.save(dto.toEntity());
+//    }
 
     @PutMapping("update")
     public  ResponseEntity<ApiResponse> update(@RequestBody UserDto  dto){

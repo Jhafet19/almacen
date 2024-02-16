@@ -21,7 +21,7 @@ public class JwtProvider {
     @Value("${jwt.secret}")
     private String secret;
 
-    @Value("{$.expiration}")
+    @Value("${jwt.expiration}")
     private Long expiration;
 
     private final String TOKEN_HEADER = "Authorization";
