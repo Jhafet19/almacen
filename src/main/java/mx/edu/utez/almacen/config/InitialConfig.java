@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.crypto.spec.OAEPParameterSpec;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -41,7 +40,8 @@ public class InitialConfig implements CommandLineRunner {
 
         PersonBean person=getOrSavePersonBean(new PersonBean("Jhafet","Rodriguez","Garcia", LocalDate.of(2004,1,26),"asd"));
 
-        UserBean userBean=getOrSaveUserBean(new UserBean("admin",passwordEncoder.encode("admin"),))
+        UserBean userBean=getOrSaveUserBean(new UserBean("admin",passwordEncoder.encode("admin"),person));
+
 
     }
 
@@ -61,7 +61,7 @@ public class InitialConfig implements CommandLineRunner {
 
     @Transactional
     public UserBean getOrSaveUserBean(UserBean userBean) {
-        Optional<UserBean> foundUsername = userRepository.findByUsername(userBean.getUsername());
+        Optional<UserBean> foundUsername = userRepository.findFirstByUsername(userBean.getUsername());
         //Lo busca
         return foundUsername.orElseGet(() -> userRepository.saveAndFlush(userBean));
     }

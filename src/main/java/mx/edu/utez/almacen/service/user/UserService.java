@@ -19,44 +19,52 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 @Transactional
+
 public class UserService {
     private final UserRepository repository;
     private final RolRepository rolRepository;
     private final PersonRepository personRepository;
+
+    @Transactional(readOnly = true)
+    public Optional<UserBean> findUserByUsername(String username) {
+        return repository.findFirstByUsername(username);
+    }
+
     public ResponseEntity<ApiResponse> getAll() {
         return new ResponseEntity<>(new ApiResponse(repository.findAll(),
                 HttpStatus.OK), HttpStatus.OK);
     }
-    @Transactional(rollbackFor = {SQLException.class})
-    public ResponseEntity<ApiResponse> save(UserBean userbean) {
-        Optional<UserBean> foundUser = repository.findByUsername(userbean.getUsername());
-        if (foundUser.isPresent()) {
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "EL usuario ya existe"), HttpStatus.BAD_REQUEST);
-        }
-        //verifica si hay una persona en este user
-        if (userbean.getPersonBean() != null) {
-            Optional<PersonBean> foundPerson = personRepository.findById(userbean.getPersonBean().getId());
-            //verifica que la persona existe
-            if (!foundPerson.isPresent()){
-            personRepository.saveAndFlush(userbean.getPersonBean());
-            }
-        }else{
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST,true,"No has ingresado a una persona"),HttpStatus.BAD_REQUEST);
-        }
 
-        if(userbean.getRolBean()!=null){
-            Optional<RolBean> foundRol =rolRepository.findById(userbean.getRolBean().getId());
-            if (!foundRol.isPresent()){
-                rolRepository.saveAndFlush(userbean.getRolBean());
-
-            }
-        }else{
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST,true,"No has ingresado a un rol"),HttpStatus.BAD_REQUEST);
-        }
-        return  new ResponseEntity<>(new ApiResponse(repository.saveAndFlush(userbean)
-                , HttpStatus.OK, true,
-                "Ya la cree"), HttpStatus.OK);
-    }
+//    @Transactional(rollbackFor = {SQLException.class})
+//    public ResponseEntity<ApiResponse> save(UserBean userbean) {
+//        Optional<UserBean> foundUser = repository.findFirstByUsername(userbean.getUsername());
+//        if (foundUser.isPresent()) {
+//            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "EL usuario ya existe"), HttpStatus.BAD_REQUEST);
+//        }
+//        //verifica si hay una persona en este user
+//        if (userbean.getPersonBean() != null) {
+//            Optional<PersonBean> foundPerson = personRepository.findById(userbean.getPersonBean().getId());
+//            //verifica que la persona existe
+//            if (!foundPerson.isPresent()){
+//            personRepository.saveAndFlush(userbean.getPersonBean());
+//            }
+//        }else{
+//            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST,true,"No has ingresado a una persona"),HttpStatus.BAD_REQUEST);
+//        }
+//
+//        if(userbean.getRoles()!=null){
+//            Optional<RolBean> foundRol =rolRepository.findById(userbean.getRoles().getId());
+//            if (!foundRol.isPresent()){
+//                rolRepository.saveAndFlush(userbean.getRoles());
+//
+//            }
+//        }else{
+//            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST,true,"No has ingresado a un rol"),HttpStatus.BAD_REQUEST);
+//        }
+//        return  new ResponseEntity<>(new ApiResponse(repository.saveAndFlush(userbean)
+//                , HttpStatus.OK, true,
+//                "Ya la cree"), HttpStatus.OK);
+//    }
 
     @Transactional(rollbackFor = {SQLException.class})
     public ResponseEntity<ApiResponse> delete(Long id) {
